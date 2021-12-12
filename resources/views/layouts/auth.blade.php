@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}"> 
- 
+  <script src="https://kit.fontawesome.com/a030024a2c.js" crossorigin="anonymous"></script>
+
     @yield('css')
     <title>@yield('title')</title>
     @livewireStyles

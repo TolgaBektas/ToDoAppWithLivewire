@@ -8,17 +8,18 @@
                             <h3 class="card-title center">Add new To Do!</h3>
                         </div>
                     
-                <div class="col-md-8 m-auto">
+                <div class="col-md-6 m-auto">
                     <form method="POST" autocomplete="off">
                         @csrf
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="name">What To Do?</label>
-                                <textarea wire:model="content" cols="110" rows="5" placeholder="Enter what to do..."></textarea>
+                            <div class="form-floating">
+                                <textarea wire:model="content" class="form-control" placeholder="Enter what to do!"></textarea>
+                                <label for="floatingTextarea">What To DO?</label>
                                 @error('content')
                                     <span class="text-danger">{{$message}}</span>
                                 @enderror
-                            </div>
+                              </div>
+                           
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" wire:model="status">
                                 <label class="form-check-label" for="status">is it DONE?</label>
@@ -53,7 +54,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>To Do</th>
@@ -70,16 +71,16 @@
                                     <tr class="center">
                                         <td>{{ $todo->content }}</td>
                                         @if ($todo->status)
-                                        <td><button type="submit" class="btn btn-success">Yes!</button></td>
+                                        <td><i class="far fa-check-circle fa-2x" style="color: green"></i></td>
                                         @else
-                                        <td><button type="submit" class="btn btn-danger">No!</button></td>
+                                        <td><i class="fas fa-ban fa-2x" style="color: red"></i></td>
                                         @endif   
                                         <td>{{ \Carbon\Carbon::parse($todo->created_at)->format('d-m-Y H:i') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($todo->updated_at)->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button class="btn btn-info">Update</button>
-                                                <button class="btn btn-danger">Delete</button>
+                                                <button class="btn btn-info"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>
