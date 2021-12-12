@@ -12,7 +12,7 @@ class Index extends Component
     public function add()
     {
         $this->validate([
-            'content' => 'required'
+            'content' => 'required|max:255'
         ]);
         $this->status = $this->status ? 1 : 0;
 
@@ -25,7 +25,7 @@ class Index extends Component
     }
     public function render()
     {
-        $todos = Todos::all();
+        $todos = Todos::orderBy('created_at', 'DESC')->get();
         return view('livewire.index', compact('todos'));
     }
 }
