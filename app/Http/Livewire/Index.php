@@ -16,13 +16,15 @@ class Index extends Component
         ]);
         $this->status = $this->status ? 1 : 0;
 
-        Todos::create([
+        $todo = Todos::create([
             'content' => $this->content,
             'status' => $this->status
         ]);
-        $this->content = null;
-        $this->status = null;
-        $this->message = "Todo added successfully!";
+        if ($todo) {
+            $this->content = null;
+            $this->status = null;
+            $this->message = "Todo added successfully!";
+        }
     }
     public function resetInput()
     {
@@ -33,6 +35,7 @@ class Index extends Component
     }
     public function edit($id)
     {
+        $this->message = null;
         $todo = Todos::findOrFail($id);
         $this->selected_id = $id;
         $this->content = $todo->content;
@@ -50,6 +53,7 @@ class Index extends Component
                 'content' => $this->content,
                 'status' => $this->status ? 1 : 0
             ]);
+
             $this->resetInput();
             $this->message = "Updated!";
         }
