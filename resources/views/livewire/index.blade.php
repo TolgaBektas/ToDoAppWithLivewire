@@ -3,6 +3,14 @@
         <div class="container-fluid">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-md-8">
+
+                    @if ($message)
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        {{ $message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    @endif
+
                     <div class="card card-success">
                         <div class="card-header text-center ">
                             <h3 class="card-title center">Add new To Do!</h3>
@@ -26,10 +34,16 @@
                             </div>
                         </div>
                         <div class="card-footer">
+                            @if ($updateMode)
+                            <input type="hidden" wire:model="selected_id">
+                            <button type="button" wire:click="update" class="btn btn-success">Update!</button>
+                            @else
                             <button type="button" wire:click="add" class="btn btn-success">Add!</button>
+                            @endif
+                            <button type="button" class="btn float-end" wire:click="resetInput()"><i class="fas fa-redo"></i></button>
                         </div>
                     </form>
-                </div>
+                </div>  
             </div>
         </div>
     </div>
@@ -79,8 +93,8 @@
                                         <td>{{ \Carbon\Carbon::parse($todo->updated_at)->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button class="btn btn-info"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                                <button class="btn btn-info" wire:click="edit({{ $todo->id }})"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" wire:click="delete({{ $todo->id }})"><i class="far fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>
