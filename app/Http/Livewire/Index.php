@@ -3,12 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Todos;
-use Illuminate\Http\Request;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class Index extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $content, $status, $selected_id, $message, $searchContent, $searchCreatedAt, $searchUpdatedAt, $updateMode = false;
+
     public function add()
     {
         $this->validate([
@@ -68,16 +71,19 @@ class Index extends Component
     public function render()
     {
         if ($this->searchContent) {
-            $todos = Todos::where('content', 'like', '%' . $this->searchContent . '%')->get();
+            $this->message = null;
+            $todos = Todos::where('content', 'like', '%' . $this->searchContent . '%')->paginate(2);
             return view('livewire.index', compact('todos'));
         } else if ($this->searchCreatedAt) {
-            $todos = Todos::where('created_at', 'like', '%' . $this->searchCreatedAt . '%')->get();
+            $this->message = null;
+            $todos = Todos::where('created_at', 'like', '%' . $this->searchCreatedAt . '%')->paginate(2);
             return view('livewire.index', compact('todos'));
         } else if ($this->searchUpdatedAt) {
-            $todos = Todos::where('updated_at', 'like', '%' . $this->searchUpdatedAt . '%')->get();
+            $this->message = null;
+            $todos = Todos::where('updated_at', 'like', '%' . $this->searchUpdatedAt . '%')->paginate(2);
             return view('livewire.index', compact('todos'));
         } else {
-            $todos = Todos::orderBy('created_at', 'DESC')->get();
+            $todos = Todos::orderBy('created_at', 'DESC')->paginate(2);
             return view('livewire.index', compact('todos'));
         }
     }

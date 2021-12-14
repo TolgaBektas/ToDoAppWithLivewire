@@ -102,7 +102,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>			
+                            {{ $todos->links() }}
+                        </div>	
                     </div>
                 </div>
               </div>
