@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public $content, $status, $selected_id, $message, $updateMode = false;
+    public $content, $status, $selected_id, $message, $searchContent, $searchCreatedAt, $searchUpdatedAt, $updateMode = false;
     public function add()
     {
         $this->validate([
@@ -67,7 +67,18 @@ class Index extends Component
     }
     public function render()
     {
-        $todos = Todos::orderBy('created_at', 'DESC')->get();
-        return view('livewire.index', compact('todos'));
+        if ($this->searchContent) {
+            $todos = Todos::where('content', 'like', '%' . $this->searchContent . '%')->get();
+            return view('livewire.index', compact('todos'));
+        } else if ($this->searchCreatedAt) {
+            $todos = Todos::where('created_at', 'like', '%' . $this->searchCreatedAt . '%')->get();
+            return view('livewire.index', compact('todos'));
+        } else if ($this->searchUpdatedAt) {
+            $todos = Todos::where('updated_at', 'like', '%' . $this->searchUpdatedAt . '%')->get();
+            return view('livewire.index', compact('todos'));
+        } else {
+            $todos = Todos::orderBy('created_at', 'DESC')->get();
+            return view('livewire.index', compact('todos'));
+        }
     }
 }

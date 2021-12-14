@@ -59,7 +59,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    <div class="card">
+                    
+                    <div class="card">                        
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12 text-center">
@@ -71,10 +72,10 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>To Do</th>
+                                        <th>To Do <input class="form-control" wire:model="searchContent" type="search" placeholder="Search" aria-label="Search"></th>
                                         <th>is it DONE?</th>
-                                        <th>created_at</th>
-                                        <th>updated_at</th>
+                                        <th>created_at <input class="form-control" wire:model="searchCreatedAt" type="search" placeholder="Search" aria-label="Search"></th>
+                                        <th>updated_at <input class="form-control" wire:model="searchUpdatedAt" type="search" placeholder="Search" aria-label="Search"></th>
                                         <th colspan="1"></th>
                                     </tr>
                                 </thead>
@@ -89,8 +90,8 @@
                                         @else
                                         <td><i class="fas fa-ban fa-2x" style="color: red"></i></td>
                                         @endif   
-                                        <td>{{ \Carbon\Carbon::parse($todo->created_at)->format('d-m-Y H:i') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($todo->updated_at)->format('d-m-Y H:i') }}</td>
+                                        <td>{{ $todo->created_at }}</td>
+                                        <td>{{ $todo->updated_at }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
                                                 <button class="btn btn-info" wire:click="edit({{ $todo->id }})"><i class="fas fa-pen"></i></button>
