@@ -51,7 +51,7 @@ class Index extends Component
             'content' => 'required|max:255'
         ]);
         if ($this->selected_id) {
-            $todo = Todos::find($this->selected_id);
+            $todo = Todos::findOrFail($this->selected_id);
             $todo->update([
                 'content' => $this->content,
                 'status' => $this->status ? 1 : 0
@@ -65,6 +65,7 @@ class Index extends Component
     {
         if ($id) {
             $todo = Todos::destroy($id);
+            $this->resetInput();
             $this->message = "Deleted";
         }
     }
