@@ -69,22 +69,26 @@ class Index extends Component
             $this->message = "Deleted";
         }
     }
+    public function clear()
+    {
+        $this->message = null;
+    }
     public function render()
     {
         if ($this->searchContent) {
             $this->message = null;
-            $todos = Todos::where('content', 'like', '%' . $this->searchContent . '%')->paginate(2);
+            $todos = Todos::where('content', 'like', '%' . $this->searchContent . '%')->paginate(5);
             return view('livewire.index', compact('todos'));
         } else if ($this->searchCreatedAt) {
             $this->message = null;
-            $todos = Todos::where('created_at', 'like', '%' . $this->searchCreatedAt . '%')->paginate(2);
+            $todos = Todos::where('created_at', 'like', '%' . $this->searchCreatedAt . '%')->paginate(5);
             return view('livewire.index', compact('todos'));
         } else if ($this->searchUpdatedAt) {
             $this->message = null;
-            $todos = Todos::where('updated_at', 'like', '%' . $this->searchUpdatedAt . '%')->paginate(2);
+            $todos = Todos::where('updated_at', 'like', '%' . $this->searchUpdatedAt . '%')->paginate(5);
             return view('livewire.index', compact('todos'));
         } else {
-            $todos = Todos::orderBy('created_at', 'DESC')->paginate(2);
+            $todos = Todos::orderBy('created_at', 'DESC')->paginate(5);
             return view('livewire.index', compact('todos'));
         }
     }
